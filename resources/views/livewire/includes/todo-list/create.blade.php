@@ -1,34 +1,25 @@
-<div class="container content py-6 mx-auto">
-    <div class="mx-auto">
-        <div id="create-form" class="hover:shadow p-6 bg-white border-blue-500 border-t-2">
-            <div class="flex ">
-                <h2 class="font-semibold text-lg text-gray-800 mb-5">Create New Todo</h2>
-            </div>
-            <div>
-                <form wire:submit="create">
-                    <div class="mb-6">
-                        <label for="name"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*
-                            Todo </label>
-                        <input type="text" id="name" wire:model="name" placeholder="Todo.."
-                               class="bg-gray-100  text-gray-900 text-sm rounded block w-full p-2.5">
-
-                        @error('name')
-                        <span class="text-red-500 text-xs mt-3 block ">{{ $message }}</span>
-                        @enderror
-
-                    </div>
-                    <button type="submit"
-                            class="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600">Create
-                        +
-                    </button>
-                    @if(session('success'))
-                        <span class="text-green-500 text-xs">{{ session('success') }}</span>
-
-                    @endif
-
-                </form>
-            </div>
+<div class="w-full md:w-1/2 p-6 bg-white rounded-lg shadow-lg">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Create New Todo</h2>
+    <form wire:submit.prevent="create">
+        <!-- Name Field -->
+        <div class="mb-6">
+            <label for="name" class="block mb-2 text-sm font-medium text-gray-700">* Todo</label>
+            <input type="text" id="name" wire:model="name" placeholder="Enter your task..."
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-3 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out">
+            @error('name')
+            <span class="text-red-500 text-xs mt-2">{{ $message }}</span>
+            @enderror
         </div>
-    </div>
+        <!-- Submit Button -->
+        <div class="mb-6">
+            <button type="submit"
+                    class="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300">
+                Create Task +
+            </button>
+        </div>
+        @if(session('success'))
+            <span class="text-green-500 text-xs">{{ session('success') }}</span>
+
+        @endif
+    </form>
 </div>

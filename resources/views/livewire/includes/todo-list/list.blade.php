@@ -1,29 +1,35 @@
 <div wire:key="{{ $todo->id }}"
-     class="todo mb-5 card px-5 py-6 bg-white col-span-1 border-t-2 border-blue-500 hover:shadow">
-    <div class="flex justify-between space-x-2">
-        <div class="flex items-center">
-            @if($todo->is_completed)
-                <input type="checkbox" class="mr-2" checked wire:click="toggle({{ $todo->id }})">
-            @else
-                <input type="checkbox" class="mr-2" wire:click="toggle({{ $todo->id }})">
-            @endif
-            @if($editedTodoId === $todo->id)
-                <div class="">
-                    <input wire:model="editedTodoName" type="text" placeholder="Todo.."
-                           class="bg-gray-100  text-gray-900 text-sm rounded block w-full p-2.5"
-                           value="Todo Name">
-                    @error('editedTodoName')
-                    <span class="text-red-500 text-xs block">{{ $message }}</span>
-                    @enderror
-                </div>
+     class="todo mb-4 bg-white rounded-lg shadow-sm p-4 col-span-1 border-t-2 hover:shadow-lg transition duration-200">
+    <div class="flex justify-between items-center space-x-3">
+        <!-- Todo Content -->
+        <div class="flex items-center space-x-3">
+            <div>
+                @if($todo->is_completed)
+                    <input type="checkbox" class="mr-2 w-4 h-4 text-teal-500" checked
+                           wire:click="toggle({{ $todo->id }})">
+                @else
+                    <input type="checkbox" class="mr-2 w-4 h-4 text-teal-500" wire:click="toggle({{ $todo->id }})">
+                @endif
+            </div>
 
-            @else
-                <h3 class="text-lg text-semibold text-gray-800">{{ $todo->name }}</h3>
-            @endif
+            <!-- Editable Todo Name -->
+            <div class="flex items-center w-full">
+                @if($editedTodoId === $todo->id)
+                    <input wire:model="editedTodoName" type="text" placeholder="Edit Todo.."
+                           class="bg-gray-100 text-gray-900 text-sm rounded-md w-full p-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    @error('editedTodoName')
+                    <span class="text-red-500 text-xs mt-2">{{ $message }}</span>
+                    @enderror
+                @else
+                    <h3 class="text-base font-semibold text-gray-800">{{ $todo->name }}</h3>
+                @endif
+            </div>
         </div>
-        <div class="flex items-center space-x-2">
+
+        <!-- Action Buttons -->
+        <div class="flex space-x-2">
             <button wire:click="edit({{ $todo->id }})"
-                    class="text-sm text-teal-500 font-semibold rounded hover:text-teal-800">
+                    class="text-teal-500 font-semibold hover:text-teal-700 transition duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                      stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -31,7 +37,7 @@
                 </svg>
             </button>
             <button wire:click="delete({{ $todo->id }})"
-                    class="text-sm text-red-500 font-semibold rounded hover:text-teal-800 mr-1">
+                    class="text-red-500 font-semibold hover:text-red-700 transition duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                      stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -40,15 +46,22 @@
             </button>
         </div>
     </div>
-    <span
-        class="text-xs text-gray-500"> {{ \Carbon\Carbon::parse($todo->created_at)->timezone('Asia/Kolkata')->format('d-m-Y h:i:s A') }} </span>
-    <div class="mt-3 text-xs text-gray-700">
+
+    <!-- Timestamp -->
+    <span class="text-xs text-gray-500 block mt-2">
+        {{ \Carbon\Carbon::parse($todo->created_at)->timezone('Asia/Kolkata')->format('d-m-Y h:i:s A') }}
+    </span>
+
+    <!-- Update/Cancel Buttons (When Editing) -->
+    <div class="mt-3 flex space-x-3">
         @if($editedTodoId === $todo->id)
             <button wire:click="update"
-                    class="mt-3 px-4 py-2 bg-teal-500 text-white font-semibold rounded hover:bg-teal-600">Update
+                    class="px-3 py-1.5 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 transition duration-200">
+                Update
             </button>
             <button wire:click="cancelEdit"
-                    class="mt-3 px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600">Cancel
+                    class="px-3 py-1.5 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition duration-200">
+                Cancel
             </button>
         @endif
     </div>
