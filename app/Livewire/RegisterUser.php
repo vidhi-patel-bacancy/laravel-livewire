@@ -42,16 +42,24 @@ class RegisterUser extends Component
                 $validatedData['image'] = $this->image->store('uploads/users', 'public');
             }
 
-            User::create($validatedData);
+            $user = User::create($validatedData);
 
             $this->reset();
 
             session()->flash('success', 'User has been register successfully.!');
             $this->resetPage();
+
+            $this->dispatch('user-created', $user);
         } catch (\Exception $exception) {
             session()->flash('error', $exception->getMessage());
             return;
         }
+
+    }
+
+    public function reloadList()
+    {
+        $this->dispatch('user-created');
 
     }
 
@@ -79,7 +87,6 @@ class RegisterUser extends Component
 
     public function render()
     {
-        $users = User::where('first_name', 'like', "%{$this->search}%")->orWhere('last_name', 'like', "%{$this->search}%")->orderByDesc('id')->paginate(5);
-        return view('livewire.register-user', compact('users'));
+        return view('livewire.register-user');
     }
 }

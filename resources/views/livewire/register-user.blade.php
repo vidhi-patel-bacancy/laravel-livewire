@@ -23,21 +23,9 @@
             @include('livewire.includes.user.search')
 
             <div id="users-list">
-                @if(count($users))
-                    @foreach($users as $user)
-                        @include('livewire.includes.user.list')
-                    @endforeach
-                    <!-- Pagination -->
-                    <div class="my-2">
-                        {{ $users->links() }}
-                    </div>
-                @else
-                    <div class="todo mb-5 card px-5 py-6 bg-white col-span-1 border-t-2 border-blue-500 hover:shadow">
-                        <div class="flex justify-around space-x-2">
-                            <h3 class="text-lg text-semibold text-gray-800">No Users Found</h3>
-                        </div>
-                    </div>
-                @endif
+                @livewire('user-list',['lazy'=>false])
+                {{--                @livewire('user-list',['lazy'=>true])--}}
+                {{--                <livewire:user-list lazy />--}}
             </div>
         </div>
     </div>

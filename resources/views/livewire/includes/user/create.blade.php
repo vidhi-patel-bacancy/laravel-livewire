@@ -65,6 +65,14 @@
         </div>
         <!-- Submit Button -->
         <div class="mb-6">
+            {{--            <button  type="button" wire:click.prevent="reloadList"--}}
+            <button type="button" @click="$dispatch('user-created')"
+                    class="w-full py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition duration-300">
+                Reload List
+            </button>
+        </div>
+        <!-- Submit Button -->
+        <div class="mb-6">
             <button wire:loading.attr="disabled" type="submit"
                     class="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300">
                 Register User +
